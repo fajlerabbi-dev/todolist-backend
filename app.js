@@ -37,7 +37,7 @@ app.use(limiter);
 
 // MongoDB database connection
 const URI = 'mongodb://127.0.0.1:27017/ToDo';
-const OPTION = { user: '', pass: '' }
+const OPTION = { user: '', pass: '', autoIndex: true }
 
 mongoose.connect(URI, OPTION, (error) => {
   if (!error) console.log('Database Connection Success');
