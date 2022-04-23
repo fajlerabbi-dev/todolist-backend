@@ -12,6 +12,6 @@ const DataSchema = mongoose.Schema({
 }, { versionKey: false });
 
 
-const ProfileModel = mongoose.model('Profiles', DataSchema);
+const ProfileModel = mongoose.model('profiles', DataSchema);
 
 module.exports = ProfileModel;
