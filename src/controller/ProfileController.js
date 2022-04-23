@@ -42,9 +42,9 @@ exports.UserLogin = (req, res) => {
 
 // Select Profile
 exports.SelectProfile = (req, res) => {
-  const UserName = "";
+  const UserName = req.headers['UserName'];
 
-  ProfileModel.find({ UserName: UserName }, (error, data) => {
+  ProfileModel.find({ UserName: UserName }, { Password: 0 }, (error, data) => {
     if (!error) {
       res.status(200).json({ status: 'Success', data: data });
     } else {
@@ -52,4 +52,18 @@ exports.SelectProfile = (req, res) => {
     }
   })
 
+}
+
+// Update Profile
+exports.UpdateProfile = (req, res) => {
+  const UserName = req.headers['UserName'];
+  const reqBody = req.body;
+
+  ProfileModel.updateOne({ UserName: UserName }, reqBody, { upsert: true }, (error, data) => {
+    if (!error) {
+      res.status(200).json({ status: 'Success', data: data });
+    } else {
+      res.status(400).json({ status: 'Fail', data: error });
+    }
+  });
 }
