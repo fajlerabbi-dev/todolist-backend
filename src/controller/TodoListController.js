@@ -57,13 +57,79 @@ exports.UpdateTodo = (req, res) => {
     TodoUpdateDate: TodoUpdateDate,
   }
 
-  TodoListModel.updateOne({ _id: _id }, { $set: PostBody }, { upsert: true }, (err, data) => {
-    if (err) {
-      res.status(400).json({ status: "fail", data: err })
+  TodoListModel.updateOne({ _id: _id }, { $set: PostBody }, { upsert: true }, (error, data) => {
+    if (error) {
+      res.status(400).json({ status: "fail", data: error })
     }
     else {
       res.status(200).json({ status: "success", data: data })
     }
   })
 
+}
+
+// Update Status Todo
+exports.UpdateStatusTodo = (req, res) => {
+  const _id = req.body['_id'];
+  const TodoUpdateDate = Date.now();
+  const TodoStatus = req.body['TodoStatus'];
+  const postBody = {
+    TodoStatus,
+    TodoUpdateDate
+  }
+
+  TodoListModel.updateOne({ _id: _id }, { $set: postBody }, { upsert: true }, (error, data) => {
+    if (error) {
+      res.status(400).json({ status: "fail", data: error })
+    }
+    else {
+      res.status(200).json({ status: "success", data: data })
+    }
+  })
+}
+
+// Remove Todo
+exports.RemoveTodo = (req, res) => {
+  const _id = req.body['_id'];
+
+  TodoListModel.remove({ _id }, (error, data) => {
+    if (error) {
+      res.status(400).json({ status: "fail", data: error })
+    }
+    else {
+      res.status(200).json({ status: "success", data: data })
+    }
+  });
+}
+
+
+// Select Todo by status
+exports.SelectTodoByStatus = (req, res) => {
+  const UserName = req.headers['UserName'];
+  const TodoStatus = req.body['TodoStatus'];
+
+  TodoListModel.find({ UserName, TodoStatus }, (error, data) => {
+    if (error) {
+      res.status(400).json({ status: "fail", data: error })
+    }
+    else {
+      res.status(200).json({ status: "success", data: data })
+    }
+  })
+}
+
+// Select Todo by status
+exports.SelectTodoByDate = (req, res) => {
+  const UserName = req.headers['UserName'];
+  const FromDate = req.body['FromDate'];
+  const ToDate = req.body['ToDate'];
+
+  TodoListModel.find({ UserName: UserName, TodoCreateDate: { $gte: new Date(FromDate), $lte: new Date(ToDate) } }, (error, data) => {
+    if (error) {
+      res.status(400).json({ status: "fail", data: error })
+    }
+    else {
+      res.status(200).json({ status: "success", data: data })
+    }
+  })
 }

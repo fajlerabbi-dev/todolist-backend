@@ -1,6 +1,6 @@
 const express = require('express');
 const { CreateProfile, UserLogin, SelectProfile, UpdateProfile } = require('../controller/ProfileController');
-const { CreateTodo, SelectTodo, UpdateTodo } = require('../controller/TodoListController');
+const { CreateTodo, SelectTodo, UpdateTodo, UpdateStatusTodo, RemoveTodo, SelectTodoByStatus, SelectTodoByDate } = require('../controller/TodoListController');
 const AuthVerifyMiddleware = require('../middleware/AuthVerifyMiddleware');
 const router = express.Router();
 
@@ -15,6 +15,10 @@ router.post('/UpdateProfile', AuthVerifyMiddleware, UpdateProfile);
 router.post('/CreateTodo', AuthVerifyMiddleware, CreateTodo);
 router.get('/SelectTodo', AuthVerifyMiddleware, SelectTodo);
 router.post('/UpdateTodo', AuthVerifyMiddleware, UpdateTodo);
+router.post('/UpdateStatusTodo', AuthVerifyMiddleware, UpdateStatusTodo);
+router.post('/RemoveTodo', AuthVerifyMiddleware, RemoveTodo);
+router.post('/SelectTodoByStatus', AuthVerifyMiddleware, SelectTodoByStatus);
+router.post('/SelectTodoByDate', AuthVerifyMiddleware, SelectTodoByDate);
 
 
 
