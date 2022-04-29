@@ -26,3 +26,44 @@ exports.CreateTodo = (req, res) => {
     }
   })
 }
+
+
+// Select Todo
+exports.SelectTodo = (req, res) => {
+  const UserName = req.headers['UserName'];
+
+  TodoListModel.find({ UserName: UserName }, { Password: 0 }, (error, data) => {
+    if (!error) {
+      res.status(200).json({ status: 'Success', data: data });
+    } else {
+      res.status(400).json({ status: 'Unauthorized', data: error });
+    }
+  })
+
+}
+
+
+// Update Todo
+exports.UpdateTodo = (req, res) => {
+
+  let TodoSubject = req.body['TodoSubject']
+  let TodoDescription = req.body['TodoDescription']
+  let _id = req.body['_id']
+  let TodoUpdateDate = Date.now();
+
+  let PostBody = {
+    TodoSubject: TodoSubject,
+    TodoDescription: TodoDescription,
+    TodoUpdateDate: TodoUpdateDate,
+  }
+
+  TodoListModel.updateOne({ _id: _id }, { $set: PostBody }, { upsert: true }, (err, data) => {
+    if (err) {
+      res.status(400).json({ status: "fail", data: err })
+    }
+    else {
+      res.status(200).json({ status: "success", data: data })
+    }
+  })
+
+}

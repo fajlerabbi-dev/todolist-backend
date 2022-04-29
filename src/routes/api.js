@@ -1,6 +1,6 @@
 const express = require('express');
 const { CreateProfile, UserLogin, SelectProfile, UpdateProfile } = require('../controller/ProfileController');
-const { CreateTodo } = require('../controller/TodoListController');
+const { CreateTodo, SelectTodo, UpdateTodo } = require('../controller/TodoListController');
 const AuthVerifyMiddleware = require('../middleware/AuthVerifyMiddleware');
 const router = express.Router();
 
@@ -13,6 +13,8 @@ router.post('/UpdateProfile', AuthVerifyMiddleware, UpdateProfile);
 
 // TODO API ROUTES
 router.post('/CreateTodo', AuthVerifyMiddleware, CreateTodo);
+router.get('/SelectTodo', AuthVerifyMiddleware, SelectTodo);
+router.post('/UpdateTodo', AuthVerifyMiddleware, UpdateTodo);
 
 
 
